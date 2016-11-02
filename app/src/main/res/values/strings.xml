@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">UITracker</string>
+    <string name="accessibility_service_description">UITracker Service</string>
+</resources>
