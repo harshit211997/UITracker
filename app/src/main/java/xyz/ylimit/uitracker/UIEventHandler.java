@@ -63,6 +63,7 @@ class UIEventHandler extends Handler {
     }
 
     private void collectEvents() {
+        // TODO merge events to DroidBot event
         Debug.log("Start collecting UI events", trackerService);
         for (UIEvent event : this.pendingEvents) {
             Debug.log(event.toString(), trackerService);
@@ -71,6 +72,7 @@ class UIEventHandler extends Handler {
     }
 
     private void dumpUIState() {
+        // TODO convert state to DroidBot state
         Debug.log("Start dumping UI state", trackerService);
         AccessibilityNodeInfo rootNode = trackerService.getRootInActiveWindow();
         if (rootNode != null) {
