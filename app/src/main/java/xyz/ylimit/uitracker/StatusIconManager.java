@@ -33,14 +33,14 @@ public class StatusIconManager {
     public StatusIconManager(Context context, UIEventHandler eventHandler) {
         this.context = context;
         this.eventHandler = eventHandler;
-        windowManager = (WindowManager) context.getSystemService(context.WINDOW_SERVICE);
+        windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
     }
 
 
     /**
      * add the status icon using the context specified in the class
      */
-    public void addStatusIcon(){
+    public void addStatusIcon() {
         statusIcon = new ImageView(context);
         statusIcon.setImageResource(R.mipmap.ic_launcher);
         params = new WindowManager.LayoutParams(
@@ -53,7 +53,6 @@ public class StatusIconManager {
         DisplayMetrics displaymetrics = new DisplayMetrics();
         windowManager.getDefaultDisplay().getMetrics(displaymetrics);
 
-
         params.gravity = Gravity.TOP | Gravity.LEFT;
         params.x = displaymetrics.widthPixels;
         params.y = 200;
@@ -61,25 +60,25 @@ public class StatusIconManager {
 
         //NEEDED TO BE CONFIGURED AT APPS->SETTINGS-DRAW OVER OTHER APPS on API>=23
         int currentApiVersion = android.os.Build.VERSION.SDK_INT;
-        if(currentApiVersion >= 23){
+        if (currentApiVersion >= 23) {
             checkDrawOverlayPermission();
-            if(Settings.canDrawOverlays(context))
+            if (Settings.canDrawOverlays(context))
                 windowManager.addView(statusIcon, params);
-        }
-        else {
+        } else {
             windowManager.addView(statusIcon, params);
         }
 
-
     }
 
-    /** code to post/handler request for permission */
+    /**
+     * code to post/handler request for permission
+     */
     public final static int REQUEST_CODE = -1010101;
 
     public void checkDrawOverlayPermission() {
         /** check if we already  have permission to draw over other apps */
         int currentApiVersion = android.os.Build.VERSION.SDK_INT;
-        if(currentApiVersion >= 23) {
+        if (currentApiVersion >= 23) {
             if (!Settings.canDrawOverlays(context)) {
                 /** if not construct intent to request permission */
                 Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
@@ -96,12 +95,11 @@ public class StatusIconManager {
     /**
      * remove the status icon from the window manager
      */
-    public void removeStatusIcon(){
-        try{
-            if(statusIcon != null)
+    public void removeStatusIcon() {
+        try {
+            if (statusIcon != null)
                 windowManager.removeView(statusIcon);
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -109,6 +107,7 @@ public class StatusIconManager {
 
     /**
      * make the chathead draggable. ref. http://blog.dision.co/2016/02/01/implement-floating-widget-like-facebook-chatheads/
+     *
      * @param view
      * @param mPaperParams
      * @param displayMetrics

@@ -3,8 +3,6 @@ package xyz.ylimit.uitracker;
 import android.accessibilityservice.AccessibilityService;
 import android.view.KeyEvent;
 import android.view.accessibility.AccessibilityEvent;
-import android.view.accessibility.AccessibilityNodeInfo;
-import android.widget.Toast;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -23,7 +21,7 @@ public class UITrackerService extends AccessibilityService {
     StatusIconManager statusIconManager;
 
     @Override
-    public void onCreate(){
+    public void onCreate() {
         super.onCreate();
 
         eventHandler = new UIEventHandler(this);
@@ -33,8 +31,7 @@ public class UITrackerService extends AccessibilityService {
         try {
             Debug.log("Service Started", this);
             statusIconManager.addStatusIcon();
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -45,11 +42,11 @@ public class UITrackerService extends AccessibilityService {
     @Override
     public void onAccessibilityEvent(AccessibilityEvent event) {
         //return if the event is not among the accessibilityEventArrayToHandle
-        if(!accessibilityEventToHandle.contains(event.getEventType())) {
+        if (!accessibilityEventToHandle.contains(event.getEventType())) {
             return;
         }
 
-        if(event.getPackageName() != null && excludePackages.contains(event.getPackageName().toString()))
+        if (event.getPackageName() != null && excludePackages.contains(event.getPackageName().toString()))
             return;
 
         eventHandler.handle(event);
@@ -71,23 +68,22 @@ public class UITrackerService extends AccessibilityService {
     }
 
     @Override
-    public void onServiceConnected(){
+    public void onServiceConnected() {
         super.onServiceConnected();
     }
 
     @Override
-    public void onDestroy(){
+    public void onDestroy() {
         super.onDestroy();
         Debug.log("Service Stopped", this);
-        if(statusIconManager != null)
+        if (statusIconManager != null) {
             try {
                 statusIconManager.removeStatusIcon();
-            }
-            catch (Exception e){
+            } catch (Exception e) {
                 //failed to remove status icon
                 e.printStackTrace();
             }
-
+        }
     }
 
 }
