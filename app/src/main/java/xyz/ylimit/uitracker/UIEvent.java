@@ -39,8 +39,7 @@ public class UIEvent {
         }
         if (eventId2Type.containsKey(eventTypeId)) {
             return eventId2Type.get(eventTypeId);
-        }
-        else {
+        } else {
             return String.format("VIEW_%d", eventTypeId);
         }
     }
@@ -57,8 +56,7 @@ public class UIEvent {
         }
         if (keyCode2Name.containsKey(keyCode)) {
             return keyCode2Name.get(keyCode);
-        }
-        else {
+        } else {
             return String.format("KEY_%d", keyCode);
         }
     }

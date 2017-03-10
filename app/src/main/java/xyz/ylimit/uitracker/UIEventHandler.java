@@ -1,13 +1,12 @@
 package xyz.ylimit.uitracker;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.view.KeyEvent;
 import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityNodeInfo;
-import android.widget.Toast;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,7 +22,7 @@ class UIEventHandler extends Handler {
     private List<UIEvent> pendingEvents;
     private static final int EVENT_WAITING_TIME_MILLISECOND = 1000;
 
-    UIEventHandler(UITrackerService trackerService){
+    UIEventHandler(UITrackerService trackerService) {
         this.trackerService = trackerService;
         this.pendingEvents = new ArrayList<>();
     }
@@ -40,8 +39,8 @@ class UIEventHandler extends Handler {
         this.pendingEvents.clear();
     }
 
-    void handle(AccessibilityEvent event){
-        if(event == null)
+    void handle(AccessibilityEvent event) {
+        if (event == null)
             return;
         synchronized (eventLock) {
             if (isWaitingForEvents()) {
@@ -52,7 +51,7 @@ class UIEventHandler extends Handler {
     }
 
     void handle(KeyEvent event) {
-        if(event == null)
+        if (event == null)
             return;
         synchronized (eventLock) {
             if (isWaitingForEvents()) {
@@ -104,18 +103,19 @@ class UIEventHandler extends Handler {
 
     /**
      * traverse a tree from the root, and return all the notes in the tree
+     *
      * @param root the root node
      * @return a list of filtered nodes
      */
-    private List<AccessibilityNodeInfo> preOrderTraverse(AccessibilityNodeInfo root){
-        if(root == null)
+    private List<AccessibilityNodeInfo> preOrderTraverse(AccessibilityNodeInfo root) {
+        if (root == null)
             return null;
         List<AccessibilityNodeInfo> list = new ArrayList<>();
         list.add(root);
         int childCount = root.getChildCount();
-        for(int i = 0; i < childCount; i ++){
+        for (int i = 0; i < childCount; i++) {
             AccessibilityNodeInfo node = root.getChild(i);
-            if(node != null)
+            if (node != null)
                 list.addAll(preOrderTraverse(node));
         }
         return list;
